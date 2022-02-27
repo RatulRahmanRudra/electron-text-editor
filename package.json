@@ -1,0 +1,16 @@
+{
+  "name": "electron-text-editor",
+  "version": "1.0.0",
+  "description": "a simple text editor with electron js ",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ratul Rahman Rudra",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^17.0.1",
+    "electron-reloader": "^1.2.3"
+  }
+}
