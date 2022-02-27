@@ -12,20 +12,40 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
   el.createDocumentBtn.addEventListener("click", () => {
-    console.log('create document');
-    ipcRenderer.send("create-document-triggered");
+    ipcRenderer.send("create-document-triggered")
   })
 
 
   el.openDocumentBtn.addEventListener("click", () => {
-    console.log('open document');
+    ipcRenderer.send("open-document-triggered")
   })
-  ipcRenderer.on("document-created", (_, filePath) => {
+
+  el.fileTextarea.addEventListener("input", (e) => {
+    ipcRenderer.send("file-content-updated", e.target.value);
+  });
+
+  /*------------------------------------*/
+
+
+
+  const handlDocument = (filePath, content = "") => {
     el.documentName.innerHTML = path.parse(filePath).base;
     el.fileTextarea.removeAttribute("disabled");
+    el.fileTextarea.value = content;
     el.fileTextarea.focus();
-  })
-})
+  }
+
+  ipcRenderer.on("document-created", (_, filePath) => {
+    handlDocument(filePath);
+  });
+
+  ipcRenderer.on("document-opened", (_, {filePath, content}) => {
+    handlDocument(filePath, content);
+  });
 
 
+ 
+
+
+});
 
