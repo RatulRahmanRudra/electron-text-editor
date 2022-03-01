@@ -1,6 +1,13 @@
 # electron-text-editor
 
--> npm install
+## Simple text editor to open and create text files.
 
--> npm start
+## Auto save text
 
+# to run the app type the following command in console.
+
+```
+npm install
+
+npm start
+```

@@ -14,15 +14,26 @@
   </head>
   <body>
     <div class="title-bar">
+      <div class="menu-section">
+        <button type="button" id="openDocumentBtn" class="btn">
+          <i class="fa fa-external-link" aria-hidden="true"></i>
+        </button>
+        <button id="createDocumentBtn" class="btn">
+          <i class="fa fa-file-text" aria-hidden="true"></i>
+        </button>
+      </div>
       <div class="bar">
         <span class="document-name" id="documentName">no file selected</span>
       </div>
-      <div class="menu-section">
-        <button type="button" id="openDocumentBtn">
-          <i class="fa fa-external-link" aria-hidden="true"></i>
+      <div class="window-buttons">
+        <button class="btn" id="minimizeBtn">
+          <i class="fa fa-window-minimize" aria-hidden="true"></i>
         </button>
-        <button id="createDocumentBtn">
-          <i class="fa fa-file-text" aria-hidden="true"></i>
+        <button class="btn" id="maximizeBtn">
+          <i class="fa fa-window-maximize" aria-hidden="true"></i>
+        </button>
+        <button class="btn" id="closeBtn">
+          <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
       </div>
     </div>

@@ -17,22 +17,27 @@ body {
 
 .title-bar .document-name,
 .title-bar .menu-section {
-  margin-right: 10px;
+  margin: 10px;
 }
 .title-bar .bar {
-  width: 80%;
+  width: 75%;
   height: 100%;
-  /* justify-content: flex-start; */
-  -webkit-app-region: drag;
   text-align: center;
-  /* background-color: red; */
+  box-sizing: border-box;
+  padding: 15px;
+  background-color: rgb(68, 62, 95);
+  -webkit-app-region: drag;
 }
 
 .title-bar .document-name {
   color: white;
 }
 
-.menu-section button {
+.window-buttons {
+  margin-right: 5px;
+}
+
+.btn {
   background-color: rgb(71, 87, 109);
   color: aliceblue;
   /* border: none;

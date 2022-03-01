@@ -1,5 +1,5 @@
 require("electron-reloader")(module);
-const {BrowserWindow, app, ipcMain, ipcRenderer} = require("electron");
+const {BrowserWindow, app, ipcMain, ipcRenderer, Notification} = require("electron");
 const { dialog } = require("electron/main");
 const path = require("path")
 const fs = require("fs");
@@ -14,19 +14,29 @@ const createWindow = () => {
     width: 800,
     webPreferences:{
       preload: path.join(app.getAppPath(), "renderer.js"),
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true,
     },
     frame: false,
     // titleBarStyle: "hiddenInset",
     
   })
-  // mainWindow.webContents.openDevTools();
-  // mainWindow.setMenuBarVisibility(false);
-  // mainWindow.menuBarVisible = true;
   mainWindow.loadFile("index.html");
+  
+  // mainWindow.minimize();
 }
 
 app.whenReady().then(createWindow);
+
+
+const handleError = (error) => {
+  new Notification({
+    title: "Error",
+    body: error
+  })
+}
+
+
 
 
 ipcMain.on("create-document-triggered", async () => {
@@ -44,7 +54,7 @@ ipcMain.on("create-document-triggered", async () => {
       }
     })
   } catch (error) {
-    alert(error);
+    handleError(error)
   }  
 })
 
@@ -58,14 +68,14 @@ ipcMain.on("open-document-triggered", async () => {
     const filePath = currentFilePath = filePaths[0];
     fs.readFile(filePath, "utf-8", (error, content) => {
       if(error){
-        console.error(error);
+        handleError(error);
       }else{
         mainWindow.webContents.send("document-opened", {filePath, content});
       }
     })
 
   } catch (error) {
-    console.error(error)
+    handleError(error)
   }
 });
 
@@ -73,7 +83,29 @@ ipcMain.on("open-document-triggered", async () => {
 ipcMain.on("file-content-updated", (_, textAereaContent) => {
   fs.writeFile(currentFilePath, textAereaContent, (error) => {
     if(error){
-      console.error(err);
+      handleError(error);
     }
   })
 })
+
+
+ipcMain.on("minimize-triggered", () => {
+  mainWindow.minimize();
+})
+
+ipcMain.on("maximize-triggered", () => {
+  if(!mainWindow.isMaximized()){
+    mainWindow.maximize();
+  }else   mainWindow.restore();
+  ;
+  // console.log(mainWindow.isMaximized())
+  
+})
+
+ipcMain.on("close-triggered", () => {
+  mainWindow.close();
+})
+
+
+
+
